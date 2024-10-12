@@ -13,8 +13,8 @@ exports.getTodos = async (req, res) => {
 // Crear una nueva tarea
 exports.createTodo = async (req, res) => {
   try {
-    const { title } = req.body;
-    const newTodo = await Todo.create({ title });
+    const { title, completed, description } = req.body;
+    const newTodo = await Todo.create({ title , completed, description });
     res.status(201).json(newTodo);
   } catch (error) {
     res.status(500).json({ error: 'Error al crear la tarea' });
@@ -25,11 +25,12 @@ exports.createTodo = async (req, res) => {
 exports.updateTodo = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, completed } = req.body;
+    const { title, description, completed } = req.body;
     const todo = await Todo.findByPk(id);
     if (!todo) return res.status(404).json({ error: 'Tarea no encontrada' });
     todo.title = title;
     todo.completed = completed;
+    todo.description = description;
     await todo.save();
     res.status(200).json(todo);
   } catch (error) {
