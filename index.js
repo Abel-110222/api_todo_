@@ -56,5 +56,4 @@ function notifyClientsAboutTodoUpdate() {
   });
 }
 
-// Exportar la función notifyClientsAboutTodoUpdate para usarla en otros archivos
-module.exports = { notifyClientsAboutTodoUpdate };
+module.exports = { wss, notifyClientsAboutTodoUpdate };

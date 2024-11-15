@@ -1,6 +1,17 @@
 const Todo = require('../models/todo');
-const { notifyClientsAboutTodoUpdate } = require('../index'); // Importar notifyClientsAboutTodoUpdate 
 
+// Función para notificar a los clientes WebSocket
+function notifyClientsAboutTodoUpdate(todo) {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({
+        type: 'TODO_UPDATE',
+        message: 'A todo has been updated',
+        data: todo
+      }));
+    }
+  });
+}
 
 // Obtener todas las tareas
 exports.getTodos = async (req, res) => {
