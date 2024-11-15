@@ -8,9 +8,7 @@ const WebSocket = require('ws'); // Importar WebSocket
 const app = express();
 
 // Configuración de CORS para permitir solo el frontend autorizado
-app.use(cors({
-  origin: 'https://app-todo-three-nu.vercel.app/' // Asegúrate de poner la URL correcta de tu frontend
-}));
+app.use(cors()); // Usar cors
 
 app.use(express.json());
 app.use('/api', todoRoutes);
