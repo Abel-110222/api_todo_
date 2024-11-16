@@ -16,16 +16,23 @@ app.use('/api', todoRoutes);
 // Crear un servidor WebSocket en el mismo puerto o en otro puerto
 const wss = new WebSocket.Server({ noServer: true });
 
-// Manejar conexiones WebSocket
 wss.on('connection', (ws) => {
   console.log('Nuevo cliente WebSocket conectado');
   
+  // Enviar un mensaje inicial como JSON válido
+  ws.send(JSON.stringify({ message: 'Conectado al servidor de todos' }));
+
   ws.on('message', (message) => {
     console.log('Mensaje recibido:', message);
   });
 
-  // Enviar mensaje de bienvenida al cliente
-  ws.send('Conectado al servidor de todos');
+  ws.on('error', (error) => {
+    console.error('Error en WebSocket:', error);
+  });
+
+  ws.on('close', () => {
+    console.log('Cliente WebSocket desconectado');
+  });
 });
 
 // Hacer que Express maneje las conexiones WebSocket
